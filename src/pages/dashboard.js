@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Drawer,
@@ -18,7 +18,11 @@ import {
   Chip,
   Avatar,
   Fade,
-  Zoom
+  Zoom,
+  CircularProgress,
+  Alert,
+  Skeleton,
+  Button
 } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
@@ -44,295 +48,8 @@ const theme = {
   }
 };
 
-// JavaScript Tutorial Topics Data with Nested Structure
-const menuItems = [
-  {
-    id: 'basics',
-    title: 'JavaScript Basics',
-    isCategory: true,
-    children: [
-      {
-        id: 'variables',
-        title: 'Variables & Data Types',
-        content: {
-          title: 'JavaScript Variables & Data Types',
-          description: 'Learn about different ways to declare variables and understand JavaScript data types.',
-          details: [
-            'var, let, and const declarations',
-            'String, Number, Boolean primitives',
-            'Objects and Arrays',
-            'undefined and null values',
-            'Symbol and BigInt types'
-          ],
-          codeExample: `// Variable declarations
-let name = "JavaScript";
-const version = 2024;
-var isActive = true;
-
-// Data types
-let string = "Hello World";
-let number = 42;
-let boolean = true;
-let array = [1, 2, 3];
-let object = {key: "value"};`
-        }
-      },
-      {
-        id: 'operators',
-        title: 'Operators & Expressions',
-        content: {
-          title: 'JavaScript Operators & Expressions',
-          description: 'Master arithmetic, comparison, logical, and assignment operators.',
-          details: [
-            'Arithmetic operators (+, -, *, /, %)',
-            'Comparison operators (==, ===, !=, !==)',
-            'Logical operators (&&, ||, !)',
-            'Assignment operators (=, +=, -=)',
-            'Ternary operator (condition ? true : false)'
-          ],
-          codeExample: `// Arithmetic operators
-let sum = 10 + 5;
-let remainder = 10 % 3;
-
-// Comparison operators
-console.log(5 === "5"); // false (strict equality)
-console.log(5 == "5");  // true (loose equality)
-
-// Logical operators
-let isAdult = age >= 18 && age <= 65;
-
-// Ternary operator
-let status = isLoggedIn ? "Welcome!" : "Please login";`
-        }
-      }
-    ]
-  },
-  {
-    id: 'functions',
-    title: 'Functions & Scope',
-    isCategory: true,
-    children: [
-      {
-        id: 'function-basics',
-        title: 'Function Declarations',
-        content: {
-          title: 'JavaScript Function Declarations',
-          description: 'Learn different ways to declare and use functions in JavaScript.',
-          details: [
-            'Function declarations vs expressions',
-            'Arrow functions and this binding',
-            'Parameters and return values',
-            'Function hoisting',
-            'Anonymous functions'
-          ],
-          codeExample: `// Function declaration
-function greet(name) {
-  return "Hello, " + name;
-}
-
-// Function expression
-const greet2 = function(name) {
-  return "Hi, " + name;
-};
-
-// Arrow function
-const greet3 = (name) => "Hey, " + name;
-const add = (a, b) => a + b;`
-        }
-      },
-      {
-        id: 'closures',
-        title: 'Closures & Scope',
-        content: {
-          title: 'JavaScript Closures & Scope',
-          description: 'Understand lexical scope, closures, and variable accessibility.',
-          details: [
-            'Global, function, and block scope',
-            'Lexical scoping rules',
-            'Closure creation and uses',
-            'Private variables with closures',
-            'Module pattern'
-          ],
-          codeExample: `// Closure example
-function createCounter() {
-  let count = 0;
-  return function() {
-    count++;
-    return count;
-  };
-}
-
-const counter = createCounter();
-console.log(counter()); // 1
-console.log(counter()); // 2
-
-// Private variables
-function BankAccount(initialBalance) {
-  let balance = initialBalance;
-  
-  return {
-    deposit: (amount) => balance += amount,
-    getBalance: () => balance
-  };
-}`
-        }
-      }
-    ]
-  },
-  {
-    id: 'data-structures',
-    title: 'Data Structures',
-    isCategory: true,
-    children: [
-      {
-        id: 'arrays',
-        title: 'Arrays & Methods',
-        content: {
-          title: 'JavaScript Arrays & Iteration Methods',
-          description: 'Learn to work with arrays and master iteration methods for data manipulation.',
-          details: [
-            'Array creation and indexing',
-            'map(), filter(), reduce() methods',
-            'forEach() and for...of loops',
-            'find(), some(), every() methods',
-            'Array destructuring'
-          ],
-          codeExample: `// Array methods
-const numbers = [1, 2, 3, 4, 5];
-
-const doubled = numbers.map(x => x * 2);
-const evens = numbers.filter(x => x % 2 === 0);
-const sum = numbers.reduce((acc, curr) => acc + curr, 0);
-
-// Destructuring
-const [first, second, ...rest] = numbers;
-
-// Find methods
-const found = numbers.find(x => x > 3);
-const hasEven = numbers.some(x => x % 2 === 0);`
-        }
-      },
-      {
-        id: 'objects',
-        title: 'Objects & Classes',
-        content: {
-          title: 'JavaScript Objects & Classes',
-          description: 'Understand object-oriented programming concepts in JavaScript.',
-          details: [
-            'Object literal syntax',
-            'Constructor functions',
-            'ES6 Classes',
-            'Inheritance and prototypes',
-            'Methods and properties'
-          ],
-          codeExample: `// Object literal
-const person = {
-  name: "John",
-  age: 30,
-  greet() {
-    return \`Hello, I'm \${this.name}\`;
-  }
-};
-
-// ES6 Class
-class Animal {
-  constructor(name) {
-    this.name = name;
-  }
-  
-  speak() {
-    return \`\${this.name} makes a sound\`;
-  }
-}
-
-class Dog extends Animal {
-  speak() {
-    return \`\${this.name} barks\`;
-  }
-}`
-        }
-      }
-    ]
-  },
-  {
-    id: 'advanced',
-    title: 'Advanced Topics',
-    isCategory: true,
-    children: [
-      {
-        id: 'async',
-        title: 'Async Programming',
-        content: {
-          title: 'Asynchronous JavaScript',
-          description: 'Master promises, async/await, and handling asynchronous operations.',
-          details: [
-            'Understanding the event loop',
-            'Promises and Promise chaining',
-            'async/await syntax',
-            'Error handling with try/catch',
-            'Fetch API and HTTP requests'
-          ],
-          codeExample: `// Promises
-const fetchData = () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => resolve("Data loaded"), 1000);
-  });
-};
-
-// Async/await
-async function getData() {
-  try {
-    const result = await fetchData();
-    console.log(result);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// Fetch API
-async function fetchUser(id) {
-  const response = await fetch(\`/api/users/\${id}\`);
-  return response.json();
-}`
-        }
-      },
-      {
-        id: 'dom',
-        title: 'DOM Manipulation',
-        content: {
-          title: 'DOM Manipulation & Events',
-          description: 'Learn to interact with web pages dynamically using JavaScript.',
-          details: [
-            'Selecting DOM elements',
-            'Modifying element content and styles',
-            'Event listeners and handling',
-            'Creating and removing elements',
-            'Form validation and submission'
-          ],
-          codeExample: `// DOM selection and manipulation
-const element = document.getElementById('myElement');
-const buttons = document.querySelectorAll('.button');
-
-// Event handling
-button.addEventListener('click', function(event) {
-  event.preventDefault();
-  element.textContent = 'Button clicked!';
-  element.style.color = 'blue';
-});
-
-// Creating elements
-const newDiv = document.createElement('div');
-newDiv.className = 'new-element';
-document.body.appendChild(newDiv);
-
-// Form handling
-const form = document.querySelector('form');
-form.addEventListener('submit', handleSubmit);`
-        }
-      }
-    ]
-  }
-];
+// API endpoint for menu items
+const MENU_ITEMS_API = '/menuItems.json';
 
 export default function Dashboard() {
   const [selectedItem, setSelectedItem] = useState('variables');
@@ -342,6 +59,39 @@ export default function Dashboard() {
     'data-structures': false,
     advanced: false
   });
+  const [menuItems, setMenuItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch menu items from API
+  useEffect(() => {
+    const fetchMenuItems = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        const response = await fetch(MENU_ITEMS_API);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch menu items: ${response.status} ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        setMenuItems(data);
+        
+        // Set loading state to false after a small delay to show the loading UI
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+        
+      } catch (err) {
+        console.error('Error fetching menu items:', err);
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchMenuItems();
+  }, []);
 
   const handleMenuClick = (itemId) => {
     setSelectedItem(itemId);
@@ -440,8 +190,70 @@ export default function Dashboard() {
           </Box>
         </Toolbar>
         <Divider />
-        <List>
-          {menuItems.map((category) => (
+        
+        {/* Loading State */}
+        {loading && (
+          <Box sx={{ p: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+            <CircularProgress size={40} sx={{ color: theme.primary.main }} />
+            <Typography sx={{ color: theme.primary.main, fontWeight: '500' }}>
+              Loading tutorial topics...
+            </Typography>
+            {/* Loading Skeleton */}
+            <Box sx={{ width: '100%', px: 2 }}>
+              {[1, 2, 3, 4].map((i) => (
+                <Skeleton 
+                  key={i} 
+                  variant="rounded" 
+                  height={50} 
+                  sx={{ mb: 2, borderRadius: '12px' }} 
+                  animation="wave"
+                />
+              ))}
+            </Box>
+          </Box>
+        )}
+
+        {/* Error State */}
+        {error && !loading && (
+          <Box sx={{ p: 3, m: 2 }}>
+            <Alert 
+              severity="error" 
+              sx={{ 
+                borderRadius: '12px',
+                '& .MuiAlert-message': {
+                  width: '100%'
+                }
+              }}
+            >
+              <Typography variant="h6" gutterBottom>
+                Failed to Load Topics
+              </Typography>
+              <Typography variant="body2" sx={{ mb: 2 }}>
+                {error}
+              </Typography>
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={() => window.location.reload()}
+                sx={{
+                  borderColor: '#d32f2f',
+                  color: '#d32f2f',
+                  '&:hover': {
+                    borderColor: '#d32f2f',
+                    backgroundColor: 'rgba(211, 47, 47, 0.04)'
+                  }
+                }}
+              >
+                Retry
+              </Button>
+            </Alert>
+          </Box>
+        )}
+
+        {/* Menu Items */}
+        {!loading && !error && (
+          <List>
+            {menuItems.map((category) => (
             <div key={category.id}>
               {/* Category Header */}
               <ListItem disablePadding sx={{ mb: 1 }}>
@@ -566,7 +378,8 @@ export default function Dashboard() {
               </Collapse>
             </div>
           ))}
-        </List>
+          </List>
+        )}
       </Drawer>
 
       {/* Main Content */}
@@ -592,7 +405,85 @@ export default function Dashboard() {
       >
         <Toolbar />
         <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1 }}>
-          {selectedContent && (
+          {/* Loading State for Main Content */}
+          {loading && (
+            <Card 
+              elevation={0}
+              sx={{
+                background: theme.background.card,
+                borderRadius: '20px',
+                boxShadow: '0 20px 60px rgba(0, 0, 0, 0.08), 0 8px 25px rgba(0, 0, 0, 0.06)',
+                border: '1px solid rgba(255, 255, 255, 0.8)',
+                overflow: 'hidden',
+                backdropFilter: 'blur(10px)',
+                p: 6
+              }}
+            >
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+                <CircularProgress size={60} sx={{ color: theme.primary.main }} />
+                <Typography variant="h5" sx={{ color: theme.primary.main, fontWeight: 'bold' }}>
+                  Loading Tutorial Content...
+                </Typography>
+                <Box sx={{ width: '100%', maxWidth: '800px' }}>
+                  <Skeleton variant="rectangular" height={200} sx={{ mb: 3, borderRadius: '16px' }} />
+                  <Skeleton variant="rectangular" height={100} sx={{ mb: 2, borderRadius: '12px' }} />
+                  <Skeleton variant="rectangular" height={100} sx={{ mb: 2, borderRadius: '12px' }} />
+                  <Skeleton variant="rectangular" height={300} sx={{ borderRadius: '16px' }} />
+                </Box>
+              </Box>
+            </Card>
+          )}
+
+          {/* Error State for Main Content */}
+          {error && !loading && (
+            <Card 
+              elevation={0}
+              sx={{
+                background: theme.background.card,
+                borderRadius: '20px',
+                boxShadow: '0 20px 60px rgba(0, 0, 0, 0.08), 0 8px 25px rgba(0, 0, 0, 0.06)',
+                border: '1px solid rgba(255, 255, 255, 0.8)',
+                overflow: 'hidden',
+                backdropFilter: 'blur(10px)',
+                p: 6
+              }}
+            >
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+                <Typography variant="h4" sx={{ color: '#d32f2f', fontWeight: 'bold' }}>
+                  ⚠️ Unable to Load Content
+                </Typography>
+                <Typography variant="h6" sx={{ color: '#666', textAlign: 'center' }}>
+                  Failed to load tutorial content. Please check your connection and try again.
+                </Typography>
+                <Alert severity="error" sx={{ mt: 2, borderRadius: '12px' }}>
+                  <Typography variant="body2">
+                    {error}
+                  </Typography>
+                </Alert>
+                <Button
+                  variant="contained"
+                  onClick={() => window.location.reload()}
+                  sx={{
+                    background: theme.primary.gradient,
+                    color: 'white',
+                    fontWeight: 'bold',
+                    px: 4,
+                    py: 1.5,
+                    borderRadius: '12px',
+                    '&:hover': {
+                      transform: 'translateY(-2px)',
+                      boxShadow: '0 8px 25px rgba(102, 126, 234, 0.4)'
+                    }
+                  }}
+                >
+                  Reload Page
+                </Button>
+              </Box>
+            </Card>
+          )}
+
+          {/* Main Content */}
+          {selectedContent && !loading && !error && (
             <Zoom in={true} timeout={300}>
               <Card 
                 elevation={0}

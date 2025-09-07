@@ -1,0 +1,158 @@
+[
+  {
+    "id": "basics",
+    "title": "JavaScript Basics",
+    "isCategory": true,
+    "children": [
+      {
+        "id": "variables",
+        "title": "Variables & Data Types",
+        "content": {
+          "title": "JavaScript Variables & Data Types",
+          "description": "Learn about different ways to declare variables and understand JavaScript data types.",
+          "details": [
+            "var, let, and const declarations",
+            "String, Number, Boolean primitives",
+            "Objects and Arrays",
+            "undefined and null values",
+            "Symbol and BigInt types"
+          ],
+          "codeExample": "// Variable declarations\nlet name = \"JavaScript\";\nconst version = 2024;\nvar isActive = true;\n\n// Data types\nlet string = \"Hello World\";\nlet number = 42;\nlet boolean = true;\nlet array = [1, 2, 3];\nlet object = {key: \"value\"};"
+        }
+      },
+      {
+        "id": "operators",
+        "title": "Operators & Expressions",
+        "content": {
+          "title": "JavaScript Operators & Expressions",
+          "description": "Master arithmetic, comparison, logical, and assignment operators.",
+          "details": [
+            "Arithmetic operators (+, -, *, /, %)",
+            "Comparison operators (==, ===, !=, !==)",
+            "Logical operators (&&, ||, !)",
+            "Assignment operators (=, +=, -=)",
+            "Ternary operator (condition ? true : false)"
+          ],
+          "codeExample": "// Arithmetic operators\nlet sum = 10 + 5;\nlet remainder = 10 % 3;\n\n// Comparison operators\nconsole.log(5 === \"5\"); // false (strict equality)\nconsole.log(5 == \"5\");  // true (loose equality)\n\n// Logical operators\nlet isAdult = age >= 18 && age <= 65;\n\n// Ternary operator\nlet status = isLoggedIn ? \"Welcome!\" : \"Please login\";"
+        }
+      }
+    ]
+  },
+  {
+    "id": "functions",
+    "title": "Functions & Scope",
+    "isCategory": true,
+    "children": [
+      {
+        "id": "function-basics",
+        "title": "Function Declarations",
+        "content": {
+          "title": "JavaScript Function Declarations",
+          "description": "Learn different ways to declare and use functions in JavaScript.",
+          "details": [
+            "Function declarations vs expressions",
+            "Arrow functions and this binding",
+            "Parameters and return values",
+            "Function hoisting",
+            "Anonymous functions"
+          ],
+          "codeExample": "// Function declaration\nfunction greet(name) {\n  return \"Hello, \" + name;\n}\n\n// Function expression\nconst greet2 = function(name) {\n  return \"Hi, \" + name;\n};\n\n// Arrow function\nconst greet3 = (name) => \"Hey, \" + name;\nconst add = (a, b) => a + b;"
+        }
+      },
+      {
+        "id": "closures",
+        "title": "Closures & Scope",
+        "content": {
+          "title": "JavaScript Closures & Scope",
+          "description": "Understand lexical scope, closures, and variable accessibility.",
+          "details": [
+            "Global, function, and block scope",
+            "Lexical scoping rules",
+            "Closure creation and uses",
+            "Private variables with closures",
+            "Module pattern"
+          ],
+          "codeExample": "// Closure example\nfunction createCounter() {\n  let count = 0;\n  return function() {\n    count++;\n    return count;\n  };\n}\n\nconst counter = createCounter();\nconsole.log(counter()); // 1\nconsole.log(counter()); // 2\n\n// Private variables\nfunction BankAccount(initialBalance) {\n  let balance = initialBalance;\n  \n  return {\n    deposit: (amount) => balance += amount,\n    getBalance: () => balance\n  };\n}"
+        }
+      }
+    ]
+  },
+  {
+    "id": "data-structures",
+    "title": "Data Structures",
+    "isCategory": true,
+    "children": [
+      {
+        "id": "arrays",
+        "title": "Arrays & Methods",
+        "content": {
+          "title": "JavaScript Arrays & Iteration Methods",
+          "description": "Learn to work with arrays and master iteration methods for data manipulation.",
+          "details": [
+            "Array creation and indexing",
+            "map(), filter(), reduce() methods",
+            "forEach() and for...of loops",
+            "find(), some(), every() methods",
+            "Array destructuring"
+          ],
+          "codeExample": "// Array methods\nconst numbers = [1, 2, 3, 4, 5];\n\nconst doubled = numbers.map(x => x * 2);\nconst evens = numbers.filter(x => x % 2 === 0);\nconst sum = numbers.reduce((acc, curr) => acc + curr, 0);\n\n// Destructuring\nconst [first, second, ...rest] = numbers;\n\n// Find methods\nconst found = numbers.find(x => x > 3);\nconst hasEven = numbers.some(x => x % 2 === 0);"
+        }
+      },
+      {
+        "id": "objects",
+        "title": "Objects & Classes",
+        "content": {
+          "title": "JavaScript Objects & Classes",
+          "description": "Understand object-oriented programming concepts in JavaScript.",
+          "details": [
+            "Object literal syntax",
+            "Constructor functions",
+            "ES6 Classes",
+            "Inheritance and prototypes",
+            "Methods and properties"
+          ],
+          "codeExample": "// Object literal\nconst person = {\n  name: \"John\",\n  age: 30,\n  greet() {\n    return `Hello, I'm ${this.name}`;\n  }\n};\n\n// ES6 Class\nclass Animal {\n  constructor(name) {\n    this.name = name;\n  }\n  \n  speak() {\n    return `${this.name} makes a sound`;\n  }\n}\n\nclass Dog extends Animal {\n  speak() {\n    return `${this.name} barks`;\n  }\n}"
+        }
+      }
+    ]
+  },
+  {
+    "id": "advanced",
+    "title": "Advanced Topics",
+    "isCategory": true,
+    "children": [
+      {
+        "id": "async",
+        "title": "Async Programming",
+        "content": {
+          "title": "Asynchronous JavaScript",
+          "description": "Master promises, async/await, and handling asynchronous operations.",
+          "details": [
+            "Understanding the event loop",
+            "Promises and Promise chaining",
+            "async/await syntax",
+            "Error handling with try/catch",
+            "Fetch API and HTTP requests"
+          ],
+          "codeExample": "// Promises\nconst fetchData = () => {\n  return new Promise((resolve, reject) => {\n    setTimeout(() => resolve(\"Data loaded\"), 1000);\n  });\n};\n\n// Async/await\nasync function getData() {\n  try {\n    const result = await fetchData();\n    console.log(result);\n  } catch (error) {\n    console.error(error);\n  }\n}\n\n// Fetch API\nasync function fetchUser(id) {\n  const response = await fetch(`/api/users/${id}`);\n  return response.json();\n}"
+        }
+      },
+      {
+        "id": "dom",
+        "title": "DOM Manipulation",
+        "content": {
+          "title": "DOM Manipulation & Events",
+          "description": "Learn to interact with web pages dynamically using JavaScript.",
+          "details": [
+            "Selecting DOM elements",
+            "Modifying element content and styles",
+            "Event listeners and handling",
+            "Creating and removing elements",
+            "Form validation and submission"
+          ],
+          "codeExample": "// DOM selection and manipulation\nconst element = document.getElementById('myElement');\nconst buttons = document.querySelectorAll('.button');\n\n// Event handling\nbutton.addEventListener('click', function(event) {\n  event.preventDefault();\n  element.textContent = 'Button clicked!';\n  element.style.color = 'blue';\n});\n\n// Creating elements\nconst newDiv = document.createElement('div');\nnewDiv.className = 'new-element';\ndocument.body.appendChild(newDiv);\n\n// Form handling\nconst form = document.querySelector('form');\nform.addEventListener('submit', handleSubmit);"
+        }
+      }
+    ]
+  }
+]

@@ -87,6 +87,36 @@ export default function Home() {
             </Button>
             <Button 
               component={Link} 
+              href="/menu" 
+              sx={{ 
+                color: 'white', 
+                fontWeight: '500',
+                '&:hover': { 
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  transform: 'translateY(-1px)'
+                },
+                transition: 'all 0.2s ease'
+              }}
+            >
+              Menu
+            </Button>
+            <Button 
+              component={Link} 
+              href="/kitchen" 
+              sx={{ 
+                color: 'white', 
+                fontWeight: '500',
+                '&:hover': { 
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  transform: 'translateY(-1px)'
+                },
+                transition: 'all 0.2s ease'
+              }}
+            >
+              Kitchen
+            </Button>
+            <Button 
+              component={Link} 
               href="/login" 
               sx={{ 
                 color: 'white', 
@@ -161,7 +191,7 @@ export default function Home() {
         <Box sx={{ 
           display: 'grid', 
           gap: 4,
-          gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' },
+          gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(5, 1fr)' },
           mb: 6
         }}>
           {/* Dashboard Card */}
@@ -214,6 +244,112 @@ export default function Home() {
               }}
             >
               Start Learning
+            </Button>
+          </Paper>
+
+          {/* Menu Card */}
+          <Paper
+            elevation={0}
+            sx={{
+              p: 4,
+              borderRadius: '20px',
+              background: 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)',
+              border: '1px solid rgba(102, 126, 234, 0.1)',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                transform: 'translateY(-8px)',
+                boxShadow: '0 20px 60px rgba(102, 126, 234, 0.15)',
+                border: '1px solid rgba(102, 126, 234, 0.2)'
+              }
+            }}
+          >
+            <Box sx={{
+              width: '60px',
+              height: '60px',
+              borderRadius: '16px',
+              background: theme.primary.gradient,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              mb: 3
+            }}>
+              <Typography sx={{ fontSize: '2rem' }}>🍽️</Typography>
+            </Box>
+            <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', color: theme.primary.main }}>
+              Food Menu
+            </Typography>
+            <Typography sx={{ color: '#666', mb: 3, lineHeight: 1.6 }}>
+              Discover our delicious menu with time-based recommendations. View today's specials or browse the full menu.
+            </Typography>
+            <Button 
+              component={Link} 
+              href="/menu"
+              variant="outlined"
+              sx={{
+                borderColor: theme.primary.main,
+                color: theme.primary.main,
+                fontWeight: '600',
+                '&:hover': {
+                  background: theme.primary.gradient,
+                  color: 'white',
+                  borderColor: 'transparent'
+                }
+              }}
+            >
+              View Menu
+            </Button>
+          </Paper>
+
+          {/* Kitchen Card */}
+          <Paper
+            elevation={0}
+            sx={{
+              p: 4,
+              borderRadius: '20px',
+              background: 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)',
+              border: '1px solid rgba(40, 167, 69, 0.2)',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                transform: 'translateY(-8px)',
+                boxShadow: '0 20px 60px rgba(40, 167, 69, 0.15)',
+                border: '1px solid rgba(40, 167, 69, 0.3)'
+              }
+            }}
+          >
+            <Box sx={{
+              width: '60px',
+              height: '60px',
+              borderRadius: '16px',
+              background: 'linear-gradient(135deg, #28a745 0%, #20c997 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              mb: 3
+            }}>
+              <Typography sx={{ fontSize: '2rem' }}>👨‍🍳</Typography>
+            </Box>
+            <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', color: '#28a745' }}>
+              Kitchen Dashboard
+            </Typography>
+            <Typography sx={{ color: '#666', mb: 3, lineHeight: 1.6 }}>
+              Cook's preparation center with priority orders, ingredient lists, and cooking timers for efficient food prep.
+            </Typography>
+            <Button 
+              component={Link} 
+              href="/kitchen"
+              variant="outlined"
+              sx={{
+                borderColor: '#28a745',
+                color: '#28a745',
+                fontWeight: '600',
+                '&:hover': {
+                  background: 'linear-gradient(135deg, #28a745 0%, #20c997 100%)',
+                  color: 'white',
+                  borderColor: 'transparent'
+                }
+              }}
+            >
+              Open Kitchen
             </Button>
           </Paper>
 
